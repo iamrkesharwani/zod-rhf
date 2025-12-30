@@ -1,14 +1,14 @@
 import { Check, User, FileText, ShieldCheck } from 'lucide-react';
-import { Briefcase, History, Scale, StickyNote } from 'lucide-react';
+import { Briefcase, History, Scale, Upload } from 'lucide-react';
 
-const StepIndicator = ({ currentStep }) => {
+const StepIndicator = ({ currentStep, setCurrentStep }) => {
   const steps = [
     { number: 1, title: 'Applicant Details', icon: User },
     { number: 2, title: 'Income', icon: Briefcase },
     { number: 3, title: 'Credit History', icon: History },
     { number: 4, title: 'Assets & Liabilities', icon: Scale },
     { number: 5, title: 'Loan Details', icon: FileText },
-    { number: 6, title: 'Documents', icon: StickyNote },
+    { number: 6, title: 'Documents', icon: Upload },
     { number: 7, title: 'Guarantor', icon: ShieldCheck },
   ];
 
@@ -21,7 +21,11 @@ const StepIndicator = ({ currentStep }) => {
           const isCurrent = step.number === currentStep;
 
           return (
-            <div key={step.number} className="flex flex-col items-center">
+            <div
+              key={step.number}
+              onClick={() => setCurrentStep(step.number)}
+              className="flex flex-col items-center cursor-pointer"
+            >
               <div
                 className={`w-28 h-28 rounded-2xl flex items-center justify-center transition-all duration-500 ${
                   isCompleted

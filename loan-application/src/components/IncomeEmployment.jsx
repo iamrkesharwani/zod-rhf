@@ -109,11 +109,7 @@ function IncomeEmployment() {
               <h4 className="section-header">Income Source #1</h4>
             </div>
 
-            <button
-              type="button"
-              className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50
-              rounded-lg transition-all active:scale-75"
-            >
+            <button type="button" className="x-button">
               <X className="w-5 h-5" />
             </button>
           </div>

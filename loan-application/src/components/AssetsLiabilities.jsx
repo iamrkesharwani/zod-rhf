@@ -221,8 +221,8 @@ function AssetsLiabilities() {
       </div>
 
       {/* Net Worth */}
-      <div className="bg-white border-2 border-indigo-400 rounded-2xl p-8 text-indigo-600">
-        <h3 className="text-2xl font-bold mb-6 text-center">
+      <div className="main-section border-indigo-200">
+        <h3 className="text-2xl font-bold mb-6 text-center text-emerald-600">
           Net Worth Analysis
         </h3>
         <div className="grid grid-cols-3 gap-6">

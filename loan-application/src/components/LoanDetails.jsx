@@ -14,6 +14,7 @@ function LoanDetails() {
         </div>
       </div>
 
+      {/* Loan Type */}
       <div className="main-section border-blue-200">
         <label className="section-header mb-5">
           Loan Type <span className="text-red-500">*</span>
@@ -40,6 +41,7 @@ function LoanDetails() {
         </div>
       </div>
 
+      {/* Loan Amount */}
       <div className="main-section border-blue-200">
         <h3 className="section-header mb-5">
           <DollarSign className="w-5 h-5 text-blue-600" />
@@ -92,43 +94,35 @@ function LoanDetails() {
         </div>
 
         {/* EMI Calculator */}
-        <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
+        <div className="mt-8 p-6 bg-indigo-50 border-2 border-blue-300 rounded-xl">
           <h4 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
             <TrendingUp className="w-5 h-5" />
             Estimated EMI Breakdown
           </h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div className="bg-white p-4 rounded-lg border border-blue-200">
-              <p className="text-xs font-bold text-slate-600 mb-1">
-                Monthly EMI
-              </p>
+              <p className="input-label">Monthly EMI</p>
               <p className="text-2xl font-bold text-blue-600">₹18,444</p>
             </div>
             <div className="bg-white p-4 rounded-lg border border-blue-200">
-              <p className="text-xs font-bold text-slate-600 mb-1">
-                Total Interest
-              </p>
-              <p className="text-2xl font-bold text-orange-600">₹24,26,560</p>
+              <p className="input-label">Total Interest</p>
+              <p className="text-2xl font-bold text-blue-600">₹24,26,560</p>
             </div>
             <div className="bg-white p-4 rounded-lg border border-blue-200">
-              <p className="text-xs font-bold text-slate-600 mb-1">
-                Total Payable
-              </p>
-              <p className="text-2xl font-bold text-slate-900">₹44,26,560</p>
+              <p className="input-label">Total Payable</p>
+              <p className="text-2xl font-bold text-orange-600">₹44,26,560</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Loan Purpose */}
-      <div className="bg-white rounded-2xl p-8 border-2 border-blue-100 mb-6">
-        <h3 className="text-xl font-bold text-slate-900 mb-6">
-          Purpose of Loan
-        </h3>
+      <div className="main-section border-blue-200">
+        <h3 className="section-header mb-5">Purpose of Loan</h3>
         <textarea
           rows={4}
           placeholder="Please describe the purpose for which you need this loan..."
-          className="w-full px-5 py-4 rounded-xl border-2 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none outline-none text-slate-900 font-medium"
+          className="input-field focus:border-blue-500 resize-none"
         />
         <p className="text-xs text-slate-500 mt-2">
           Minimum 50 characters required
@@ -136,7 +130,7 @@ function LoanDetails() {
       </div>
 
       {/* Affordability Check */}
-      <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-2xl p-6">
+      <div className="main-section border-amber-200">
         <div className="flex items-start gap-4">
           <AlertCircle className="w-8 h-8 text-amber-600 flex-shrink-0" />
           <div className="flex-1">
@@ -144,31 +138,23 @@ function LoanDetails() {
               Affordability Assessment
             </h4>
             <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-amber-200">
-                <span className="text-sm font-semibold text-slate-700">
-                  Monthly Income
-                </span>
-                <span className="text-lg font-bold text-slate-900">
-                  ₹75,000
-                </span>
+              <div className="afford-one-section border-amber-200">
+                <span className="afford-one-title">Monthly Income</span>
+                <span className="text-lg font-bold text-gray-900">₹70,000</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-amber-200">
+              <div className="afford-one-section border-amber-200">
                 <span className="text-sm font-semibold text-slate-700">
                   Existing EMI
                 </span>
                 <span className="text-lg font-bold text-red-600">₹15,000</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-amber-200">
-                <span className="text-sm font-semibold text-slate-700">
-                  Proposed EMI
-                </span>
+              <div className="afford-one-section border-amber-200">
+                <span className="afford-one-title">Proposed EMI</span>
                 <span className="text-lg font-bold text-blue-600">₹18,444</span>
               </div>
-              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg border-2 border-green-300">
-                <span className="text-sm font-bold text-green-900">
-                  Total EMI / Income Ratio
-                </span>
-                <span className="text-2xl font-bold text-green-700">44.6%</span>
+              <div className="afford-one-section border-green-300">
+                <span className="afford-one-title">EMI / Income Ratio</span>
+                <span className="text-lg font-bold text-green-700">44.6%</span>
               </div>
             </div>
             <p className="text-sm text-amber-800 mt-4">

@@ -1,12 +1,16 @@
 import { useState } from 'react';
+
 import StepIndicator from './components/StepIndicator';
 import ApplicantDetails from './components/ApplicantDetails';
-import Step from './components/Step';
-import Submit from './components/Submit';
 import IncomeEmployment from './components/IncomeEmployment';
 import CreditHistory from './components/CreditHistory';
 import AssetsLiabilities from './components/AssetsLiabilities';
 import LoanDetails from './components/LoanDetails';
+import DocumentUpload from './components/DocumentUpload';
+import Step from './components/Step';
+import Submit from './components/Submit';
+import Guarantor from './components/Guarantor';
+import Summary from './components/Summary';
 
 const App = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -22,7 +26,10 @@ const App = () => {
           </p>
         </div>
 
-        <StepIndicator currentStep={currentStep} />
+        <StepIndicator
+          currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
+        />
 
         <div className="bg-white/95 rounded-3xl border overflow-hidden mt-10">
           <div>
@@ -31,14 +38,15 @@ const App = () => {
             {currentStep === 3 && <CreditHistory />}
             {currentStep === 4 && <AssetsLiabilities />}
             {currentStep === 5 && <LoanDetails />}
-            {/* <DocumentUploadStep /> */}
-            {/* <GuarantorStep /> */}
-            {/* <ApprovalSummary /> */}
+            {currentStep === 6 && <DocumentUpload />}
+            {currentStep === 7 && <Guarantor />}
+            {currentStep === 8 && <Summary />}
+
             {currentStep < 8 && (
               <Step currentStep={currentStep} setCurrentStep={setCurrentStep} />
             )}
 
-            {currentStep === 9 && <Submit setCurrentStep={setCurrentStep} />}
+            {currentStep === 8 && <Submit setCurrentStep={setCurrentStep} />}
           </div>
         </div>
       </div>
