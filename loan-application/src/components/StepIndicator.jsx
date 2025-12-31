@@ -50,7 +50,13 @@ const StepIndicator = ({ currentStep, setCurrentStep }) => {
                 <p
                   className={`
                     text-sm font-bold transition-colors
-                    ${isCurrent ? 'text-blue-300' : 'text-white/60'}
+                    ${
+                      isCompleted
+                        ? 'text-emerald-500'
+                        : isCurrent
+                        ? 'text-indigo-400'
+                        : 'text-white/60'
+                    }
                   `}
                 >
                   {step.title}

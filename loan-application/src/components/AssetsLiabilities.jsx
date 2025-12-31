@@ -1,5 +1,5 @@
 import { Scale, Plus, TrendingUp, TrendingDown } from 'lucide-react';
-import { Home, Car, Wallet, DollarSign } from 'lucide-react';
+import { Home, Car, Wallet, DollarSign, XCircle } from 'lucide-react';
 
 function AssetsLiabilities() {
   return (
@@ -18,20 +18,37 @@ function AssetsLiabilities() {
         </div>
       </div>
 
+      <div className="mb-6">
+        <label className="input-label">
+          Do you wish to add assets or liabilities?
+          <span className="text-red-500">*</span>
+        </label>
+        <div className="grid grid-cols-3 gap-4">
+          <label className="asset-liab-no">
+            <input type="radio" name="assetLiabNo" className="peer sr-only" />
+            <TrendingUp className="w-5 h-5" />
+            <span>Assets</span>
+          </label>
+          <label className="asset-liab-no">
+            <input type="radio" name="assetLiabNo" className="peer sr-only" />
+            <TrendingDown className="w-5 h-5" />
+            <span>Liabilities</span>
+          </label>
+          <label className="asset-liab-no">
+            <input type="radio" name="assetLiabNo" className="peer sr-only" />
+            <XCircle className="w-5 h-5" />
+            <span>No</span>
+          </label>
+        </div>
+      </div>
+
       {/* Assets */}
       <div className="main-section border-emerald-200">
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6">
           <h3 className="section-header">
             <TrendingUp className="w-5 h-5 text-green-600" />
             Assets
           </h3>
-          <button
-            type="button"
-            className="flex items-center gap-2 px-5 py-3 bg-emerald-600 text-white rounded-xl font-bold active:scale-95"
-          >
-            <Plus className="w-4 h-4" />
-            Add Asset
-          </button>
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
@@ -48,10 +65,10 @@ function AssetsLiabilities() {
               <div>
                 <label className="input-label">Property Type</label>
                 <select className="input-field focus:border-emerald-500">
-                  <option>Select type</option>
-                  <option>Residential</option>
-                  <option>Commercial</option>
-                  <option>Land</option>
+                  <option value={''}>Select type</option>
+                  <option value={'residential'}>Residential</option>
+                  <option value={'commercial'}>Commercial</option>
+                  <option value={'land'}>Land</option>
                 </select>
               </div>
               <div>

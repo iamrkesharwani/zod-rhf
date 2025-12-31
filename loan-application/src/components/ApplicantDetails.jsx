@@ -36,9 +36,6 @@ function ApplicantDetails() {
             Date of Birth <span className="text-red-500">*</span>
           </label>
           <input type="date" className="input-field focus:border-blue-500" />
-          <p className="text-xs text-slate-500 mt-2">
-            Must be at least 21 years old
-          </p>
         </div>
 
         <div>
@@ -76,9 +73,6 @@ function ApplicantDetails() {
             className="input-field focus:border-blue-500 uppercase"
             maxLength={10}
           />
-          <p className="text-xs text-slate-500 mt-2">
-            10 character alphanumeric
-          </p>
         </div>
 
         <div>
@@ -92,9 +86,6 @@ function ApplicantDetails() {
             className="input-field focus:border-blue-500"
             maxLength={14}
           />
-          <p className="text-xs text-slate-500 mt-2">
-            12-digit unique identification
-          </p>
         </div>
 
         <div className="col-span-2">
@@ -113,7 +104,11 @@ function ApplicantDetails() {
           <label className="input-label">
             City <span className="text-red-500">*</span>
           </label>
-          <input type="text" placeholder="Kolkata" className="input-field focus:border-blue-500" />
+          <input
+            type="text"
+            placeholder="Kolkata"
+            className="input-field focus:border-blue-500"
+          />
         </div>
 
         <div>
@@ -128,7 +123,7 @@ function ApplicantDetails() {
           />
         </div>
 
-        <div className="md:col-span-2">
+        <div className="col-span-2">
           <label className="input-label">
             Marital Status <span className="text-red-500">*</span>
           </label>

@@ -58,7 +58,7 @@ function CreditHistory() {
 
         <div className="mb-6">
           <label className="input-label">
-            Do you have any existing loans or credit cards?{' '}
+            Do you have any existing loans or credit cards?
             <span className="text-red-500">*</span>
           </label>
           <div className="grid grid-cols-2 gap-4">
@@ -82,12 +82,12 @@ function CreditHistory() {
                 Loan Type <span className="text-red-500">*</span>
               </label>
               <select className="input-field focus:border-purple-500">
-                <option>Select loan type</option>
-                <option>Home Loan</option>
-                <option>Car Loan</option>
-                <option>Personal Loan</option>
-                <option>Credit Card</option>
-                <option>Education Loan</option>
+                <option value={''}>Select loan type</option>
+                <option value={'homeLoan'}>Home Loan</option>
+                <option value={'carLoan'}>Car Loan</option>
+                <option value={'personalLoan'}>Personal Loan</option>
+                <option value={'creditCard'}>Credit Card</option>
+                <option value={'educationLoan'}>Education Loan</option>
               </select>
             </div>
 

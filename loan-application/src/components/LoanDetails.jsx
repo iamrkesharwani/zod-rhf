@@ -21,20 +21,20 @@ function LoanDetails() {
         </label>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {[
-            { name: 'Home Loan', desc: 'Property purchase' },
-            { name: 'Personal Loan', desc: 'Personal expenses' },
-            { name: 'Car Loan', desc: 'Vehicle purchase' },
-            { name: 'Business Loan', desc: 'Business needs' },
-            { name: 'Education Loan', desc: 'Study expenses' },
-            { name: 'Gold Loan', desc: 'Against gold' },
+            'Home Loan',
+            'Personal Loan',
+            'Car Loan',
+            'Business Loan',
+            'Education Loan',
+            'Gold Loan',
           ].map((loan) => (
             <label
-              key={loan.name}
+              key={loan}
               className="multi-button bg-white border-slate-200 text-slate-700 hover:border-blue-400 hover:bg-blue-50 gap-2"
             >
               <input type="radio" name="loanType" className="peer sr-only" />
               <div className="text-center">
-                <p className="text-sm font-bold text-slate-900">{loan.name}</p>
+                <p className="text-sm font-bold text-slate-900">{loan}</p>
               </div>
             </label>
           ))}

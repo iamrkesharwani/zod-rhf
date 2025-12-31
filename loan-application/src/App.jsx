@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import StepIndicator from './components/StepIndicator';
 import ApplicantDetails from './components/ApplicantDetails';
@@ -14,43 +16,53 @@ import Summary from './components/Summary';
 
 const App = () => {
   const [currentStep, setCurrentStep] = useState(1);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-12 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="text-5xl font-bold text-white mb-3">
-            Loan Application
-          </h1>
-          <p className="text-blue-200">
-            Complete financial profiling with risk assessment
-          </p>
-        </div>
+    <FormProvider>
+      <form>
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-12 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-10">
+              <h1 className="text-5xl font-bold text-white mb-3">
+                Loan Application
+              </h1>
+              <p className="text-blue-200">
+                Complete financial profiling with risk assessment
+              </p>
+            </div>
 
-        <StepIndicator
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-        />
+            <StepIndicator
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+            />
 
-        <div className="bg-white/95 rounded-3xl border overflow-hidden mt-10">
-          <div>
-            {currentStep === 1 && <ApplicantDetails />}
-            {currentStep === 2 && <IncomeEmployment />}
-            {currentStep === 3 && <CreditHistory />}
-            {currentStep === 4 && <AssetsLiabilities />}
-            {currentStep === 5 && <LoanDetails />}
-            {currentStep === 6 && <DocumentUpload />}
-            {currentStep === 7 && <Guarantor />}
-            {currentStep === 8 && <Summary />}
+            <div className="bg-white/95 rounded-3xl border overflow-hidden mt-10">
+              <div>
+                {currentStep === 1 && <ApplicantDetails />}
+                {currentStep === 2 && <IncomeEmployment />}
+                {currentStep === 3 && <CreditHistory />}
+                {currentStep === 4 && <AssetsLiabilities />}
+                {currentStep === 5 && <LoanDetails />}
+                {currentStep === 6 && <DocumentUpload />}
+                {currentStep === 7 && <Guarantor />}
+                {currentStep === 8 && <Summary />}
 
-            {currentStep < 8 && (
-              <Step currentStep={currentStep} setCurrentStep={setCurrentStep} />
-            )}
+                {currentStep < 8 && (
+                  <Step
+                    currentStep={currentStep}
+                    setCurrentStep={setCurrentStep}
+                  />
+                )}
 
-            {currentStep === 8 && <Submit setCurrentStep={setCurrentStep} />}
+                {currentStep === 8 && (
+                  <Submit setCurrentStep={setCurrentStep} />
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </form>
+    </FormProvider>
   );
 };
 

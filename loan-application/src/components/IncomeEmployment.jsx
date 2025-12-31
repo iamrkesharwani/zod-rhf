@@ -28,7 +28,12 @@ function IncomeEmployment() {
               key={type}
               className="multi-button bg-white border-slate-200 text-slate-700 hover:border-indigo-400 hover:bg-indigo-50 gap-2"
             >
-              <input type="radio" name="employment" className="peer sr-only" />
+              <input
+                type="radio"
+                name="employment"
+                value={type}
+                className="peer sr-only"
+              />
               <Briefcase className="w-5 h-5" />
               <span className="text-sm font-bold select-none">{type}</span>
             </label>
@@ -36,7 +41,7 @@ function IncomeEmployment() {
         </div>
       </div>
 
-      <div className="main-section border-indigo-200">
+      <div className="main-section border-slate-200">
         <h3 className="section-header mb-6">
           <Building2 className="w-5 h-5 text-indigo-600" />
           Salaried Employment Details
@@ -120,12 +125,12 @@ function IncomeEmployment() {
                 Income Type <span className="text-red-500">*</span>
               </label>
               <select className="input-field focus:border-indigo-500">
-                <option>Select income type</option>
-                <option>Salary</option>
-                <option>Business Income</option>
-                <option>Rental Income</option>
-                <option>Investment Returns</option>
-                <option>Other</option>
+                <option value={''}>Select income type</option>
+                <option value={'salary'}>Salary</option>
+                <option value={'businessIncome'}>Business Income</option>
+                <option value={'rentalIncome'}>Rental Income</option>
+                <option value={'investmentReturns'}>Investment Returns</option>
+                <option value={'other'}>Other</option>
               </select>
             </div>
 
