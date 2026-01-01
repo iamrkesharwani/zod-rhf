@@ -41,23 +41,25 @@ export const incomeSchema = z
       .min(1, { message: 'Monthly income is required' })
       .refine(
         (val) =>
-          !isNaN(Number(val) && Number(val) > 0, {
+          !Number.isNaN(Number(val), {
             message: 'Please enter a valid income amount',
           })
       )
-      .refine((val) => Number(val) >= 20000, {
+      .transform((val) => Number(val))
+      .refine((val) => val > 0, { message: 'Income must be greater than zero' })
+      .refine((val) => val >= 20000, {
         message: 'Monthly income must be at least ₹20,000',
       }),
   })
   .superRefine((data, ctx) => {
-    const today = new Date().toISOString().split('T')[0];
     const doj = new Date(data.dateOfJoining);
+    const today = new Date();
 
-    if (today > doj) {
+    if (doj > today) {
       ctx.addIssue({
         path: ['dateOfJoining'],
         code: 'custom',
-        message: "Joining must be before today's date",
+        message: 'Date of joining cannot be in the future',
       });
     }
   });

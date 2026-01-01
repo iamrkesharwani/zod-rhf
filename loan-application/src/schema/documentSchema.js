@@ -1,4 +1,4 @@
-import { file, z } from 'zod';
+import { z } from 'zod';
 
 const MAX_10_MB = 10 * 1024 * 1024;
 const MAX_5_MB = 5 * 1024 * 1024;
@@ -39,10 +39,10 @@ export const documentSchema = z.object({
   incomeProofs: z
     .array(z.instanceof(File))
     .min(1, { message: 'At least one income proof is required' })
-    .refine((files) => files.every(file.type === 'application/pdf'), {
+    .refine((files) => files.every((file) => file.type === 'application/pdf'), {
       message: 'Income proof must be PDF files',
     })
-    .refine((files) => files.every(file.size <= MAX_5_MB), {
+    .refine((files) => files.every((file) => file.size <= MAX_5_MB), {
       message: 'Each income proof must be less than 10 MB',
     }),
 

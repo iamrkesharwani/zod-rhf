@@ -13,7 +13,12 @@ export const applicantDetailSchema = z
         message: 'Full name cannot exceed 100 characters',
       }),
 
-    dateOfBirth: z.string().min(1, { message: 'Date of birth is required' }),
+    dateOfBirth: z
+      .string()
+      .min(1, { message: 'Date of birth is required' })
+      .refine((val) => !isNaN(Date.parse(val)), {
+        message: 'Enter a valid date',
+      }),
 
     email: z
       .string()
@@ -37,7 +42,7 @@ export const applicantDetailSchema = z
       .trim()
       .transform((val) => val.toUpperCase())
       .min(1, { message: 'PAN number is required' })
-      .regex(/^[A-Z]{3}[PCFHATBLJG][A-Z][0-9]{4}[A-Z]$/, {
+      .regex(/^[A-Z]{5}[0-9]{4}[A-Z]$/, {
         message: 'Enter a valid PAN number (e.g., ABCDE1234F)',
       }),
 
@@ -45,7 +50,7 @@ export const applicantDetailSchema = z
       .string()
       .trim()
       .min(1, { message: 'Aadhaar number is required' })
-      .regex(/^[2-9][0-9]{11}$/, {
+      .regex(/^[2-9]\d{11}$/, {
         message: 'Enter a valid 12-digit Aadhaar number',
       }),
 
@@ -75,7 +80,7 @@ export const applicantDetailSchema = z
       .string()
       .trim()
       .min(1, { message: 'PIN code is required' })
-      .regex(/^[1-9][0-9]{5}$/, {
+      .regex(/^[1-9]\d{5}$/, {
         message: 'Enter a valid 6-digit PIN code',
       }),
 
@@ -85,16 +90,20 @@ export const applicantDetailSchema = z
   })
   .superRefine((data, ctx) => {
     const dob = new Date(data.dateOfBirth);
-    if (isNaN(dob.getTime())) return;
+    const today = new Date();
 
-    const minDate = new Date();
-    minDate.setFullYear(minDate.getFullYear() - 21);
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
 
-    if (dob > minDate) {
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
+    if (age < 21) {
       ctx.addIssue({
         path: ['dateOfBirth'],
-        code: 'custom',
         message: 'You must be at least 21 years old',
+        code: 'custom',
       });
     }
   });

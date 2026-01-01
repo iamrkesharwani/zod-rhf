@@ -1,24 +1,43 @@
 import { z } from 'zod';
 
-export const creditHistorySchema = z.object({
+const baseCreditSchema = {
   creditScore: z
     .string()
     .trim()
     .min(1, { message: 'Credit score is a required field' })
-    .refine((val) => Number(val) > 700, {
+    .refine((val) => !Number.isNaN(Number(val)), {
+      message: 'Enter a valid credit score',
+    })
+    .transform((val) => Number(val))
+    .refine((val) => val >= 700, {
       message: 'Credit score should be at least 700',
     })
-    .refine((val) => Number(val) < 900, {
-      message: 'Credit score cannot exceed more than 900',
+    .refine((val) => val <= 900, {
+      message: 'Credit score cannot exceed 900',
     }),
 
   creditScoreDate: z
     .string()
-    .min(1, { message: 'Credit score date should be empty' }),
+    .min(1, { message: 'Credit score date is required' })
+    .refine((val) => !isNaN(Date.parse(val)), {
+      message: 'Enter a valid date',
+    }),
+};
 
-  hasLoans: z.enum(['yes', 'no'], {
-    required_error: 'Please select whether you have existing loans',
+const hasLoansSchema = z.object({
+  hasLoans: z.enum(['Yes', 'No'], {
+    required_error: 'Please select whether you have loans',
   }),
+});
+
+const noLoanSchema = z.object({
+  ...baseCreditSchema,
+  hasLoans: z.literal('No'),
+});
+
+const withLoanSchema = z.object({
+  ...baseCreditSchema,
+  hasLoans: z.literal('Yes'),
 
   loanType: z.enum(
     ['homeLoan', 'carLoan', 'personalLoan', 'creditCard', 'educationLoan'],
@@ -29,17 +48,30 @@ export const creditHistorySchema = z.object({
     .string()
     .trim()
     .min(1, { message: 'Outstanding amount cannot be empty' })
-    .refine((val) => Number(val) > 1000, {
-      message: 'Outstanding amount cannot be less than ₹1,000',
+    .refine((val) => !Number.isNaN(Number(val)), {
+      message: 'Enter a valid outstanding amount',
+    })
+    .transform((val) => Number(val))
+    .refine((val) => val >= 1000, {
+      message: 'Outstanding amount must be at least ₹1,000',
     }),
 
   monthlyEmi: z
     .string()
     .trim()
-    .min(1, { message: 'Monthly EMI field is important to enterF' }),
+    .min(1, { message: 'Monthly EMI field is a required field' })
+    .refine((val) => !Number.isNaN(Number(val)), {
+      message: 'Enter a valid EMI',
+    })
+    .transform((val) => Number(val))
+    .refine((val) => val > 0, 'EMI must be greater than zero'),
 
   lenderName: z
     .string()
     .trim()
     .min(1, { message: 'Lender name is an important field' }),
 });
+
+export const creditHistorySchema = hasLoansSchema.and(
+  z.discriminatedUnion('hasLoans', [noLoanSchema, withLoanSchema])
+);

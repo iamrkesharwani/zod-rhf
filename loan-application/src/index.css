@@ -132,7 +132,3 @@ input[type='number'] {
 .summary-checkbox {
   @apply w-5 h-5 rounded border-2 border-white;
 }
-
-.asset-liab-no {
-  @apply multi-button bg-white border-slate-200 text-slate-700 hover:border-green-400 hover:bg-green-50 gap-2 font-bold;
-}

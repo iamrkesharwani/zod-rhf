@@ -1,5 +1,12 @@
 import { Scale, Plus, TrendingUp, TrendingDown } from 'lucide-react';
-import { Home, Car, Wallet, DollarSign, XCircle } from 'lucide-react';
+import {
+  Home,
+  Car,
+  Wallet,
+  DollarSign,
+  XCircle,
+  CircleCheckBig,
+} from 'lucide-react';
 
 function AssetsLiabilities() {
   return (
@@ -23,24 +30,14 @@ function AssetsLiabilities() {
           Do you wish to add assets or liabilities?
           <span className="text-red-500">*</span>
         </label>
-        <div className="grid grid-cols-3 gap-4">
-          <label className="asset-liab-no">
-            <input type="checkbox" name="assets" className="peer sr-only" />
-            <TrendingUp className="w-5 h-5" />
-            <span>Assets</span>
+        <div className="grid grid-cols-2 gap-4">
+          <label className="multi-button bg-white border-slate-200 text-slate-700 hover:border-green-400 hover:bg-green-50 gap-2 font-bold">
+            <input type="checkbox" name="none" className="peer sr-only" />
+            <CircleCheckBig className="w-5 h-5" />
+            <span>Yes</span>
           </label>
 
-          <label className="asset-liab-no">
-            <input
-              type="checkbox"
-              name="liabilities"
-              className="peer sr-only"
-            />
-            <TrendingDown className="w-5 h-5" />
-            <span>Liabilities</span>
-          </label>
-
-          <label className="asset-liab-no">
+          <label className="multi-button bg-white border-slate-200 text-slate-700 hover:border-red-400 hover:bg-red-50 gap-2 font-bold">
             <input type="checkbox" name="none" className="peer sr-only" />
             <XCircle className="w-5 h-5" />
             <span>No</span>

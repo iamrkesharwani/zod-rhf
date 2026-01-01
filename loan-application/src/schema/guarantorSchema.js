@@ -1,10 +1,12 @@
 import { z } from 'zod';
 
-export const guarantorSchema = z.object({
+const baseSchema = {
   haveAGuarantor: z.enum(['Yes', 'No'], {
     required_error: 'Select one to continue',
   }),
+};
 
+const guarantorDetailsSchema = {
   guarName: z
     .string()
     .trim()
@@ -60,30 +62,56 @@ export const guarantorSchema = z.object({
     .string()
     .trim()
     .min(1, { message: 'Monthly income is required' })
-    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-      message: 'Please enter a valid income amount',
+    .refine((val) => !Number.isNaN(Number(val)), {
+      message: 'Enter a valid income amount',
     })
-    .refine((val) => Number(val) >= 20000, {
+    .transform((val) => Number(val))
+    .refine((val) => val >= 20000, {
       message: 'Monthly income must be at least ₹20,000',
     }),
 
   guarYearEmp: z
     .string()
     .trim()
-    .min(1, { message: 'Enter the years of employment of the guarantor' }),
+    .min(1, { message: 'Enter the years of employment of the guarantor' })
+    .refine((val) => !Number.isNaN(Number(val)), {
+      message: 'Enter valid years of employment',
+    })
+    .transform((val) => Number(val))
+    .refine((val) => val >= 1, 'At least 1 year of employment is required'),
 
   guarCreditScore: z
     .string()
     .trim()
     .min(1, { message: 'Credit score is a required field' })
-    .refine((val) => Number(val) > 700, {
+    .refine((val) => !Number.isNaN(Number(val)), {
+      message: 'Enter a valid credit score',
+    })
+    .transform((val) => Number(val))
+    .refine((val) => val >= 700, {
       message: 'Credit score should be at least 700',
     })
-    .refine((val) => Number(val) < 900, {
+    .refine((val) => val <= 900, {
       message: 'Credit score cannot exceed more than 900',
     }),
 
   guarConsentSchema: z.boolean().refine((val) => val === true, {
     message: 'Guarantor consent is required to continue',
   }),
+};
+
+const noGuarantorSchema = z.object({
+  haveAGuarantor: z.literal('No'),
 });
+
+const withGuarantorSchema = z.object({
+  haveAGuarantor: z.literal('Yes'),
+  ...guarantorDetailsSchema,
+});
+
+export const guarantorSchema = baseSchema.and(
+  z.discriminatedUnion('haveAGuarantor', [
+    noGuarantorSchema,
+    withGuarantorSchema,
+  ])
+);
