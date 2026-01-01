@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 import StepIndicator from './components/StepIndicator';
 import ApplicantDetails from './components/ApplicantDetails';
@@ -13,13 +12,21 @@ import Step from './components/Step';
 import Submit from './components/Submit';
 import Guarantor from './components/Guarantor';
 import Summary from './components/Summary';
+import { loanFormConfig } from './utils/loanFormConfig';
 
 const App = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
+  const methods = useForm(loanFormConfig);
+
+  const formSubmit = (data) => {
+    console.log(data);
+    alert('Form submitted successfully');
+  };
+
   return (
-    <FormProvider>
-      <form>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(formSubmit)}>
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-12 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-10">
@@ -56,6 +63,13 @@ const App = () => {
 
                 {currentStep === 8 && (
                   <Submit setCurrentStep={setCurrentStep} />
+                )}
+
+                {currentStep < 8 && (
+                  <p className="text-center text-slate-500 text-sm py-6">
+                    All fields marked with{' '}
+                    <span className="text-red-500">*</span> are required
+                  </p>
                 )}
               </div>
             </div>

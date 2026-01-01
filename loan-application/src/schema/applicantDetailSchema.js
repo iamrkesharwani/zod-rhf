@@ -40,11 +40,11 @@ export const applicantDetailSchema = z
     panNumber: z
       .string()
       .trim()
-      .transform((val) => val.toUpperCase())
       .min(1, { message: 'PAN number is required' })
       .regex(/^[A-Z]{5}[0-9]{4}[A-Z]$/, {
         message: 'Enter a valid PAN number (e.g., ABCDE1234F)',
-      }),
+      })
+      .transform((val) => val.toUpperCase()),
 
     aadhaarNumber: z
       .string()

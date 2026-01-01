@@ -1,0 +1,75 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loanSchema } from '../schema/loanSchema';
+
+export const loanFormConfig = {
+  resolver: zodResolver(loanSchema),
+  mode: 'onTouched',
+  defaultValues: {
+    applicantDetails: {
+      fullName: '',
+      dateOfBirth: '',
+      email: '',
+      phone: '',
+      panNumber: '',
+      aadhaarNumber: '',
+      address: '',
+      city: '',
+      pinCode: '',
+      maritalStatus: undefined,
+    },
+    income: {
+      empType: undefined,
+      employerName: '',
+      designation: '',
+      dateOfJoining: '',
+      incomeType: undefined,
+      monthlyIncome: '',
+    },
+    creditHistory: {
+      hasLoans: undefined,
+      creditScore: '',
+      creditScoreDate: '',
+      loanType: undefined,
+      outstandingAmount: '',
+      monthlyEmi: '',
+      lenderName: '',
+    },
+    assetLiability: {
+      hasAssetsOrLiabilities: undefined,
+    },
+    loanDetails: {
+      loanType: undefined,
+      loanAmount: '',
+      loanTenureYears: '',
+      expectInterest: '',
+      prefDisbursementDate: '',
+      loanPurpose: '',
+    },
+    document: {
+      bankStatements: [],
+      panCard: undefined,
+      aadhaarCard: undefined,
+      incomeProofs: [],
+      additionalDocs: [],
+    },
+    guarantor: {
+      haveAGuarantor: undefined,
+      guarName: '',
+      relWithApplicant: undefined,
+      guarPhone: '',
+      guarEmail: '',
+      guarAddress: '',
+      guarEmployerName: '',
+      guarDesignation: '',
+      guarMonthlyIncome: '',
+      guarYearEmp: '',
+      guarCreditScore: '',
+      guarConsentSchema: false,
+    },
+    summaryConsent: {
+      confirmAccuracy: false,
+      authorizeVerification: false,
+      agreeToTerms: false,
+    },
+  },
+};

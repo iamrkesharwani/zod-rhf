@@ -1,6 +1,11 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { useFormContext } from 'react-hook-form';
 
 function Step({ currentStep, setCurrentStep }) {
+  const {trigger} = useFormContext()
+
+  
+
   return (
     <section className="p-10">
       <div className="flex items-center justify-between mb-8">

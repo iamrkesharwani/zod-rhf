@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-const baseSchema = {
+const baseSchema = z.object({
   haveAGuarantor: z.enum(['Yes', 'No'], {
     required_error: 'Select one to continue',
   }),
-};
+});
 
 const guarantorDetailsSchema = {
   guarName: z
