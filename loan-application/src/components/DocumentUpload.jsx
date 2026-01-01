@@ -59,7 +59,7 @@ function DocumentUpload() {
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="w-6 h-6 text-green-500" />
-              <button className="x-button">
+              <button type="button" className="x-button">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -108,7 +108,7 @@ function DocumentUpload() {
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-6 h-6 text-green-500" />
-                    <button className="x-button">
+                    <button type="button" className="x-button">
                       <X className="w-5 h-5" />
                     </button>
                   </div>
@@ -155,7 +155,7 @@ function DocumentUpload() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <button className="x-button">
+                    <button type="button" className="x-button">
                       <X className="w-5 h-5" />
                     </button>
                   </div>
@@ -207,7 +207,7 @@ function DocumentUpload() {
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="w-6 h-6 text-green-500" />
-              <button className="x-button">
+              <button type="button" className="x-button">
                 <X className="w-5 h-5" />
               </button>
             </div>

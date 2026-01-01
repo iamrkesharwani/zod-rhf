@@ -62,20 +62,19 @@ function Guarantor() {
               className="input-field focus:border-teal-500"
             />
           </div>
-
           <div>
             <label className="input-label">
               Relationship with Applicant
               <span className="text-red-500">*</span>
             </label>
             <select className="input-field focus:border-teal-500">
-              <option>Select relationship</option>
-              <option>Parent</option>
-              <option>Sibling</option>
-              <option>Spouse</option>
-              <option>Friend</option>
-              <option>Business Partner</option>
-              <option>Other</option>
+              <option value={''}>Select relationship</option>
+              <option value={'parent'}>Parent</option>
+              <option value={'sibling'}>Sibling</option>
+              <option value={'spouse'}>Spouse</option>
+              <option value={'friend'}>Friend</option>
+              <option value={'businessPartner'}>Business Partner</option>
+              <option value={'other'}>Other</option>
             </select>
           </div>
 
@@ -90,7 +89,6 @@ function Guarantor() {
               className="input-field focus:border-teal-500"
             />
           </div>
-
           <div>
             <label className="input-label">
               <Mail className="w-4 h-4 text-teal-600" />
@@ -102,7 +100,6 @@ function Guarantor() {
               className="input-field focus:border-teal-500"
             />
           </div>
-
           <div className="col-span-2">
             <label className="input-label">
               <MapPin className="w-4 h-4 text-teal-600" />

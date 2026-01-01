@@ -25,17 +25,23 @@ function AssetsLiabilities() {
         </label>
         <div className="grid grid-cols-3 gap-4">
           <label className="asset-liab-no">
-            <input type="radio" name="assetLiabNo" className="peer sr-only" />
+            <input type="checkbox" name="assets" className="peer sr-only" />
             <TrendingUp className="w-5 h-5" />
             <span>Assets</span>
           </label>
+
           <label className="asset-liab-no">
-            <input type="radio" name="assetLiabNo" className="peer sr-only" />
+            <input
+              type="checkbox"
+              name="liabilities"
+              className="peer sr-only"
+            />
             <TrendingDown className="w-5 h-5" />
             <span>Liabilities</span>
           </label>
+
           <label className="asset-liab-no">
-            <input type="radio" name="assetLiabNo" className="peer sr-only" />
+            <input type="checkbox" name="none" className="peer sr-only" />
             <XCircle className="w-5 h-5" />
             <span>No</span>
           </label>

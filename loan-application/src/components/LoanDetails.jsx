@@ -118,7 +118,9 @@ function LoanDetails() {
 
       {/* Loan Purpose */}
       <div className="main-section border-blue-200">
-        <h3 className="section-header mb-5">Purpose of Loan</h3>
+        <h3 className="section-header mb-5">
+          Purpose of Loan <span className="text-red-500">*</span>
+        </h3>
         <textarea
           rows={4}
           placeholder="Please describe the purpose for which you need this loan..."
