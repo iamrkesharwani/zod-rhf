@@ -3,7 +3,7 @@ import { loanSchema } from '../schema/loanSchema';
 
 export const loanFormConfig = {
   resolver: zodResolver(loanSchema),
-  mode: 'onTouched',
+  mode: 'onChange',
   defaultValues: {
     applicantDetails: {
       fullName: '',
@@ -15,30 +15,35 @@ export const loanFormConfig = {
       address: '',
       city: '',
       pinCode: '',
-      maritalStatus: undefined,
+      maritalStatus: '',
     },
     income: {
-      empType: undefined,
+      empType: '',
       employerName: '',
       designation: '',
       dateOfJoining: '',
-      incomeType: undefined,
-      monthlyIncome: '',
+      incomeSources: [
+        {
+          incomeType: '',
+          annualIncome: '',
+          proofOfIncome: '',
+        },
+      ],
     },
     creditHistory: {
-      hasLoans: undefined,
+      hasLoans: '',
       creditScore: '',
       creditScoreDate: '',
-      loanType: undefined,
+      loanType: '',
       outstandingAmount: '',
       monthlyEmi: '',
       lenderName: '',
     },
     assetLiability: {
-      hasAssetsOrLiabilities: undefined,
+      hasAssetsOrLiabilities: '',
     },
     loanDetails: {
-      loanType: undefined,
+      loanType: '',
       loanAmount: '',
       loanTenureYears: '',
       expectInterest: '',
@@ -47,15 +52,15 @@ export const loanFormConfig = {
     },
     document: {
       bankStatements: [],
-      panCard: undefined,
-      aadhaarCard: undefined,
+      panCard: '',
+      aadhaarCard: '',
       incomeProofs: [],
       additionalDocs: [],
     },
     guarantor: {
-      haveAGuarantor: undefined,
+      haveAGuarantor: '',
       guarName: '',
-      relWithApplicant: undefined,
+      relWithApplicant: '',
       guarPhone: '',
       guarEmail: '',
       guarAddress: '',

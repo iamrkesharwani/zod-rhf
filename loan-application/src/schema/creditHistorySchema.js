@@ -4,7 +4,7 @@ const baseCreditSchema = {
   creditScore: z
     .string()
     .trim()
-    .min(1, { message: 'Credit score is a required field' })
+    .nonempty( { message: 'Credit score is a required field' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid credit score',
     })
@@ -18,7 +18,7 @@ const baseCreditSchema = {
 
   creditScoreDate: z
     .string()
-    .min(1, { message: 'Credit score date is required' })
+    .nonempty( { message: 'Credit score date is required' })
     .refine((val) => !isNaN(Date.parse(val)), {
       message: 'Enter a valid date',
     }),
@@ -47,7 +47,7 @@ const withLoanSchema = z.object({
   outstandingAmount: z
     .string()
     .trim()
-    .min(1, { message: 'Outstanding amount cannot be empty' })
+    .nonempty( { message: 'Outstanding amount cannot be empty' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid outstanding amount',
     })
@@ -59,7 +59,7 @@ const withLoanSchema = z.object({
   monthlyEmi: z
     .string()
     .trim()
-    .min(1, { message: 'Monthly EMI field is a required field' })
+    .nonempty( { message: 'Monthly EMI field is a required field' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid EMI',
     })
@@ -69,7 +69,7 @@ const withLoanSchema = z.object({
   lenderName: z
     .string()
     .trim()
-    .min(1, { message: 'Lender name is an important field' }),
+    .nonempty( { message: 'Lender name is an important field' }),
 });
 
 export const creditHistorySchema = hasLoansSchema.and(

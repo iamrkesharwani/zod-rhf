@@ -10,7 +10,7 @@ const guarantorDetailsSchema = {
   guarName: z
     .string()
     .trim()
-    .min(1, { message: 'Guarantor name is required' })
+    .nonempty( { message: 'Guarantor name is required' })
     .min(3, { message: 'Guarantor name must be at least 3 characters long' }),
 
   relWithApplicant: z.enum(
@@ -21,7 +21,7 @@ const guarantorDetailsSchema = {
   guarPhone: z
     .string()
     .trim()
-    .min(1, { message: 'Phone number is required' })
+    .nonempty( { message: 'Phone number is required' })
     .regex(/^[6-9]\d{9}$/, {
       message: 'Enter a valid 10-digit mobile number',
     }),
@@ -29,7 +29,7 @@ const guarantorDetailsSchema = {
   guarEmail: z
     .string()
     .trim()
-    .min(1, { message: 'Email address is required' })
+    .nonempty( { message: 'Email address is required' })
     .email({ message: 'Please enter a valid email address' })
     .max(100, {
       message: 'Email cannot exceed 100 characters',
@@ -38,7 +38,7 @@ const guarantorDetailsSchema = {
   guarAddress: z
     .string()
     .trim()
-    .min(1, { message: 'Address is required' })
+    .nonempty( { message: 'Address is required' })
     .min(10, {
       message: 'Address must be at least 10 characters',
     })
@@ -49,19 +49,19 @@ const guarantorDetailsSchema = {
   guarEmployerName: z
     .string()
     .trim()
-    .min(1, { message: 'Employer name is required' })
+    .nonempty( { message: 'Employer name is required' })
     .min(3, { message: 'Employer name must be at least 3 characters' }),
 
   guarDesignation: z
     .string()
     .trim()
-    .min(1, { message: 'Designation is required' })
+    .nonempty( { message: 'Designation is required' })
     .min(3, { message: 'Designation must be at least 3 characters' }),
 
   guarMonthlyIncome: z
     .string()
     .trim()
-    .min(1, { message: 'Monthly income is required' })
+    .nonempty( { message: 'Monthly income is required' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid income amount',
     })
@@ -73,7 +73,7 @@ const guarantorDetailsSchema = {
   guarYearEmp: z
     .string()
     .trim()
-    .min(1, { message: 'Enter the years of employment of the guarantor' })
+    .nonempty( { message: 'Enter the years of employment of the guarantor' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter valid years of employment',
     })
@@ -83,7 +83,7 @@ const guarantorDetailsSchema = {
   guarCreditScore: z
     .string()
     .trim()
-    .min(1, { message: 'Credit score is a required field' })
+    .nonempty( { message: 'Credit score is a required field' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid credit score',
     })

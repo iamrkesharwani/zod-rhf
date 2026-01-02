@@ -1,5 +1,5 @@
-const ErrorMsg = ({ error }) => {
-  return <div className="text-sm font-semibold text-red-500">{error}</div>;
+const ErrorMsg = ({ err }) => {
+  return <div className="text-sm font-semibold text-red-500">{err}</div>;
 };
 
 export default ErrorMsg;

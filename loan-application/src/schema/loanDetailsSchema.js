@@ -16,7 +16,7 @@ export const loanDetailsSchema = z.object({
   loanAmount: z
     .string()
     .trim()
-    .min(1, { message: 'Enter the amount you are looking for loan' })
+    .nonempty( { message: 'Enter the amount you are looking for loan' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid loan amount',
     })
@@ -31,7 +31,7 @@ export const loanDetailsSchema = z.object({
   loanTenureYears: z
     .string()
     .trim()
-    .min(1, { message: 'Tenure is a mandatory field' })
+    .nonempty( { message: 'Tenure is a mandatory field' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid loan tenure',
     })
@@ -46,7 +46,7 @@ export const loanDetailsSchema = z.object({
   expectInterest: z
     .string()
     .trim()
-    .min(1, { message: 'Enter your expected interest rate percentage (p.a.)' })
+    .nonempty( { message: 'Enter your expected interest rate percentage (p.a.)' })
     .refine((val) => !Number.isNaN(Number(val)), 'Enter a valid interest rate')
     .transform((val) => Number(val))
     .refine((val) => val >= 5, 'Interest rate must be at least 5%')
@@ -64,7 +64,7 @@ export const loanDetailsSchema = z.object({
 
   loanPurpose: z
     .string()
-    .min(1, { message: 'Enter purpose of your loan' })
+    .nonempty( { message: 'Enter purpose of your loan' })
     .min(50, { message: 'At least 50 characters is required' })
     .max(500, 'Loan purpose cannot exceed 500 characters'),
 });

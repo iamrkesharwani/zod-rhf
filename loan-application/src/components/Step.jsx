@@ -1,10 +1,14 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useFormContext } from 'react-hook-form';
+import { loanStepFields } from '../utils/loanStepFields';
 
 function Step({ currentStep, setCurrentStep }) {
-  const {trigger} = useFormContext()
+  const { trigger } = useFormContext();
 
-  
+  const nextStep = async () => {
+    const valid = await trigger(loanStepFields[currentStep - 1]);
+    if (valid) setCurrentStep((prev) => prev + 1);
+  };
 
   return (
     <section className="p-10">
@@ -28,7 +32,7 @@ function Step({ currentStep, setCurrentStep }) {
         <button
           type="button"
           className="flex items-center gap-3 px-6 py-4 bg-indigo-600 text-white rounded-xl transition font-bold active:scale-95"
-          onClick={() => setCurrentStep((prev) => prev + 1)}
+          onClick={nextStep}
         >
           Next Step
           <ArrowRight className="w-5 h-5" />

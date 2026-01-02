@@ -6,7 +6,7 @@ const MAX_5_MB = 5 * 1024 * 1024;
 export const documentSchema = z.object({
   bankStatements: z
     .array(z.instanceof(File))
-    .min(1, { message: 'Bank statement is required' })
+    .nonempty( { message: 'Bank statement is required' })
     .refine((files) => files.every((file) => file.type === 'application/pdf'), {
       message: 'Bank statements must be PDF files',
     })
@@ -38,7 +38,7 @@ export const documentSchema = z.object({
 
   incomeProofs: z
     .array(z.instanceof(File))
-    .min(1, { message: 'At least one income proof is required' })
+    .nonempty( { message: 'At least one income proof is required' })
     .refine((files) => files.every((file) => file.type === 'application/pdf'), {
       message: 'Income proof must be PDF files',
     })
