@@ -139,25 +139,7 @@ function CreditHistory() {
         </div>
 
         {hasLoans === 'Yes' && (
-          <div className="space-y-2">
-            <div className="flex justify-end mb-4">
-              <button
-                type="button"
-                className="flex items-center gap-2 px-5 py-3 bg-purple-600 text-white rounded-xl font-bold active:scale-95"
-                onClick={() =>
-                  append({
-                    loanType: '',
-                    outstandingAmount: '',
-                    monthlyEmi: '',
-                    lenderName: '',
-                  })
-                }
-              >
-                <Plus className="w-4 h-4" />
-                Add Loan
-              </button>
-            </div>
-
+          <div className="space-y-4">
             {fields.map((field, index) => (
               <div
                 key={field.id}
@@ -276,6 +258,23 @@ function CreditHistory() {
                 </div>
               </div>
             ))}
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="flex items-center gap-2 px-5 py-3 bg-purple-600 text-white rounded-xl font-bold active:scale-95"
+                onClick={() =>
+                  append({
+                    loanType: '',
+                    outstandingAmount: '',
+                    monthlyEmi: '',
+                    lenderName: '',
+                  })
+                }
+              >
+                <Plus className="w-4 h-4" />
+                Add Loan
+              </button>
+            </div>
           </div>
         )}
       </div>
