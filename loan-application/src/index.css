@@ -77,6 +77,10 @@ input[type='number'] {
   @apply p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all active:scale-75;
 }
 
+.plus-button {
+  @apply p-2 bg-green-600 text-white rounded-lg hover:bg-green-700 active:scale-95;
+}
+
 .file-bg {
   @apply p-4 bg-green-50 border-2 border-green-200 rounded-xl flex items-center justify-between;
 }

@@ -51,7 +51,7 @@ const loanLiabilitySchema = z.object({
 });
 
 const creditCardLiabilitySchema = z.object({
-  loanType: z.string().min(1, 'Credit card type is required'),
+  creditCardType: z.string().min(1, 'Credit card type is required'),
   outstandingAmount: z
     .string()
     .min(1, 'Outstanding amount is required')
@@ -102,7 +102,7 @@ const yesAssetsSchema = z
     },
     {
       message: 'Add at least one asset or liability',
-      path: ['hasAssetsOrLiabilities'],
+      path: ['root'],
     }
   );
 

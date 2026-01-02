@@ -40,6 +40,12 @@ export const loanFormConfig = {
     },
     assetLiability: {
       hasAssetsOrLiabilities: '',
+      realEstate: [],
+      vehicles: [],
+      bankDeposits: [],
+      investments: [],
+      loans: [],
+      creditCards: [],
     },
     loanDetails: {
       loanType: '',
