@@ -31,13 +31,12 @@ export const loanFormConfig = {
       ],
     },
     creditHistory: {
-      hasLoans: '',
       creditScore: '',
       creditScoreDate: '',
-      loanType: '',
-      outstandingAmount: '',
-      monthlyEmi: '',
-      lenderName: '',
+      hasLoans: '',
+      existingLoans: [
+        { loanType: '', outstandingAmount: '', monthlyEmi: '', lenderName: '' },
+      ],
     },
     assetLiability: {
       hasAssetsOrLiabilities: '',

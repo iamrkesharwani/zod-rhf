@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-const baseCreditSchema = {
+const baseCreditSchema = z.object({
   creditScore: z
     .string()
     .trim()
-    .nonempty( { message: 'Credit score is a required field' })
+    .nonempty({ message: 'Credit score is a required field' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid credit score',
     })
@@ -18,36 +18,28 @@ const baseCreditSchema = {
 
   creditScoreDate: z
     .string()
-    .nonempty( { message: 'Credit score date is required' })
+    .nonempty({ message: 'Credit score date is required' })
     .refine((val) => !isNaN(Date.parse(val)), {
       message: 'Enter a valid date',
     }),
-};
-
-const hasLoansSchema = z.object({
-  hasLoans: z.enum(['Yes', 'No'], {
-    required_error: 'Please select whether you have loans',
-  }),
 });
 
-const noLoanSchema = z.object({
-  ...baseCreditSchema,
-  hasLoans: z.literal('No'),
-});
-
-const withLoanSchema = z.object({
-  ...baseCreditSchema,
-  hasLoans: z.literal('Yes'),
-
-  loanType: z.enum(
-    ['homeLoan', 'carLoan', 'personalLoan', 'creditCard', 'educationLoan'],
-    { required_error: 'Select a loan type' }
-  ),
+const existingLoanSchema = z.object({
+  loanType: z
+    .enum([
+      'homeLoan',
+      'carLoan',
+      'personalLoan',
+      'creditCard',
+      'educationLoan',
+    ])
+    .or(z.literal(''))
+    .refine((val) => val !== '', { message: 'Select a loan type' }),
 
   outstandingAmount: z
     .string()
     .trim()
-    .nonempty( { message: 'Outstanding amount cannot be empty' })
+    .nonempty({ message: 'Outstanding amount cannot be empty' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid outstanding amount',
     })
@@ -59,7 +51,7 @@ const withLoanSchema = z.object({
   monthlyEmi: z
     .string()
     .trim()
-    .nonempty( { message: 'Monthly EMI field is a required field' })
+    .nonempty({ message: 'Monthly EMI field is a required field' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid EMI',
     })
@@ -69,9 +61,24 @@ const withLoanSchema = z.object({
   lenderName: z
     .string()
     .trim()
-    .nonempty( { message: 'Lender name is an important field' }),
+    .nonempty({ message: 'Lender name is an important field' }),
 });
 
-export const creditHistorySchema = hasLoansSchema.and(
-  z.discriminatedUnion('hasLoans', [noLoanSchema, withLoanSchema])
-);
+const hasLoansSchema = z.object({
+  hasLoans: z.string().min(1, { message: 'Select "Yes" or "No" to continue' }),
+});
+
+const noLoanSchema = z.object({
+  hasLoans: z.literal('No'),
+});
+
+const withLoanSchema = z.object({
+  hasLoans: z.literal('Yes'),
+  existingLoans: z
+    .array(existingLoanSchema)
+    .min(1, { message: 'Please add at least one loan' }),
+});
+
+export const creditHistorySchema = baseCreditSchema
+  .and(hasLoansSchema)
+  .and(z.discriminatedUnion('hasLoans', [noLoanSchema, withLoanSchema]));

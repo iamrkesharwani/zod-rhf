@@ -21,13 +21,10 @@ export const loanStepFields = [
   ],
 
   [
-    'creditHistory.hasLoans',
     'creditHistory.creditScore',
     'creditHistory.creditScoreDate',
-    'creditHistory.loanType',
-    'creditHistory.outstandingAmount',
-    'creditHistory.monthlyEmi',
-    'creditHistory.lenderName',
+    'creditHistory.hasLoans',
+    'creditHistory.existingLoans',
   ],
 
   ['assetLiability.hasAssetsOrLiabilities'],
