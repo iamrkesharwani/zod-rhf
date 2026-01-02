@@ -1,14 +1,17 @@
 import { Scale, Plus, TrendingUp, TrendingDown } from 'lucide-react';
-import {
-  Home,
-  Car,
-  Wallet,
-  DollarSign,
-  XCircle,
-  CircleCheckBig,
-} from 'lucide-react';
+import { Home, Car, Wallet } from 'lucide-react';
+import { DollarSign, XCircle, CircleCheckBig } from 'lucide-react';
+
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 function AssetsLiabilities() {
+  const {
+    register,
+    watch,
+    control,
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <section className="p-10">
       <div className="flex items-center gap-4 mb-8">
@@ -32,13 +35,13 @@ function AssetsLiabilities() {
         </label>
         <div className="grid grid-cols-2 gap-4">
           <label className="multi-button bg-white border-slate-200 text-slate-700 hover:border-green-400 hover:bg-green-50 gap-2 font-bold">
-            <input type="checkbox" name="none" className="peer sr-only" />
+            <input type="checkbox" value="Yes" className="peer sr-only" />
             <CircleCheckBig className="w-5 h-5" />
             <span>Yes</span>
           </label>
 
           <label className="multi-button bg-white border-slate-200 text-slate-700 hover:border-red-400 hover:bg-red-50 gap-2 font-bold">
-            <input type="checkbox" name="none" className="peer sr-only" />
+            <input type="checkbox" value="No" className="peer sr-only" />
             <XCircle className="w-5 h-5" />
             <span>No</span>
           </label>
