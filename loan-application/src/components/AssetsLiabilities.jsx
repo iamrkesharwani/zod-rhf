@@ -86,14 +86,6 @@ function AssetsLiabilities() {
   const totalLiabilities = calculateTotalLiabilities();
   const netWorth = totalAssets - totalLiabilities;
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
   return (
     <section className="p-10">
       <div className="flex items-center gap-4 mb-8">
@@ -540,7 +532,7 @@ function AssetsLiabilities() {
                     </p>
                   </div>
                   <p className="text-4xl font-bold text-green-700">
-                    {formatCurrency(totalAssets)}
+                    ₹{totalAssets.toLocaleString('en-IN')}
                   </p>
                 </div>
               </div>
@@ -753,7 +745,7 @@ function AssetsLiabilities() {
                     </p>
                   </div>
                   <p className="text-4xl font-bold text-red-700">
-                    {formatCurrency(totalLiabilities)}
+                    ₹{totalLiabilities.toLocaleString('en-IN')}
                   </p>
                 </div>
               </div>
@@ -839,6 +831,12 @@ function AssetsLiabilities() {
               )}
             </div>
           </div>
+        </div>
+      )}
+
+      {errors?.assetLiability?._atLeastOne && (
+        <div className="mb-4 p-4 bg-orange-50 border-2 border-orange-300 rounded-xl">
+          <ErrorMsg err={errors.assetLiability._atLeastOne.message} />
         </div>
       )}
     </section>

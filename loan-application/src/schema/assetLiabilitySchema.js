@@ -102,7 +102,7 @@ const yesAssetsSchema = z
     },
     {
       message: 'Add at least one asset or liability',
-      path: ['root'],
+      path: ['_atLeastOne'],
     }
   );
 

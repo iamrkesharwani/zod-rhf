@@ -50,7 +50,7 @@ export const loanFormConfig = {
     loanDetails: {
       loanType: '',
       loanAmount: '',
-      loanTenureYears: '',
+      loanTenureMonths: '',
       expectInterest: '',
       prefDisbursementDate: '',
       loanPurpose: '',

@@ -1,22 +1,12 @@
 import { z } from 'zod';
 
 export const loanDetailsSchema = z.object({
-  loanType: z.enum(
-    [
-      'Home Loan',
-      'Personal Loan',
-      'Car Loan',
-      'Business Loan',
-      'Education Loan',
-      'Gold Loan',
-    ],
-    { required_error: 'Select the purpose of loan' }
-  ),
+  loanType: z.string().min(1, { message: 'Select an loan type to continue' }),
 
   loanAmount: z
     .string()
     .trim()
-    .nonempty( { message: 'Enter the amount you are looking for loan' })
+    .nonempty({ message: 'Enter the amount you are looking for loan' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid loan amount',
     })
@@ -28,10 +18,10 @@ export const loanDetailsSchema = z.object({
       message: 'Loan amount cannot exceed ₹1 crore',
     }),
 
-  loanTenureYears: z
+  loanTenureMonths: z
     .string()
     .trim()
-    .nonempty( { message: 'Tenure is a mandatory field' })
+    .nonempty({ message: 'Tenure is a mandatory field' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid loan tenure',
     })
@@ -39,14 +29,16 @@ export const loanDetailsSchema = z.object({
     .refine((val) => val >= 3, {
       message: 'Loan tenure must be at least 3 months',
     })
-    .refine((val) => val >= 120, {
+    .refine((val) => val <= 120, {
       message: 'Loan tenure cannot exceed 10 years',
     }),
 
   expectInterest: z
     .string()
     .trim()
-    .nonempty( { message: 'Enter your expected interest rate percentage (p.a.)' })
+    .nonempty({
+      message: 'Enter your expected interest rate percentage (p.a.)',
+    })
     .refine((val) => !Number.isNaN(Number(val)), 'Enter a valid interest rate')
     .transform((val) => Number(val))
     .refine((val) => val >= 5, 'Interest rate must be at least 5%')
@@ -64,7 +56,7 @@ export const loanDetailsSchema = z.object({
 
   loanPurpose: z
     .string()
-    .nonempty( { message: 'Enter purpose of your loan' })
+    .nonempty({ message: 'Enter purpose of your loan' })
     .min(50, { message: 'At least 50 characters is required' })
     .max(500, 'Loan purpose cannot exceed 500 characters'),
 });
