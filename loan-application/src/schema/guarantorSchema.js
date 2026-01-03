@@ -1,27 +1,26 @@
 import { z } from 'zod';
 
 const baseSchema = z.object({
-  haveAGuarantor: z.enum(['Yes', 'No'], {
-    required_error: 'Select one to continue',
-  }),
+  haveAGuarantor: z
+    .string()
+    .min(1, { message: 'Select "Yes" or "No" to continue' }),
 });
 
 const guarantorDetailsSchema = {
   guarName: z
     .string()
     .trim()
-    .nonempty( { message: 'Guarantor name is required' })
+    .nonempty({ message: 'Guarantor name is required' })
     .min(3, { message: 'Guarantor name must be at least 3 characters long' }),
 
-  relWithApplicant: z.enum(
-    ['parent', 'sibling', 'spouse', 'friend', 'businessPartner', 'other'],
-    { required_error: 'Select a relation with the applicant' }
-  ),
+  relWithApplicant: z
+    .string()
+    .min(1, { message: 'Select a relation with the applicant' }),
 
   guarPhone: z
     .string()
     .trim()
-    .nonempty( { message: 'Phone number is required' })
+    .nonempty({ message: 'Phone number is required' })
     .regex(/^[6-9]\d{9}$/, {
       message: 'Enter a valid 10-digit mobile number',
     }),
@@ -29,7 +28,7 @@ const guarantorDetailsSchema = {
   guarEmail: z
     .string()
     .trim()
-    .nonempty( { message: 'Email address is required' })
+    .nonempty({ message: 'Email address is required' })
     .email({ message: 'Please enter a valid email address' })
     .max(100, {
       message: 'Email cannot exceed 100 characters',
@@ -38,7 +37,7 @@ const guarantorDetailsSchema = {
   guarAddress: z
     .string()
     .trim()
-    .nonempty( { message: 'Address is required' })
+    .nonempty({ message: 'Address is required' })
     .min(10, {
       message: 'Address must be at least 10 characters',
     })
@@ -49,19 +48,19 @@ const guarantorDetailsSchema = {
   guarEmployerName: z
     .string()
     .trim()
-    .nonempty( { message: 'Employer name is required' })
+    .nonempty({ message: 'Employer name is required' })
     .min(3, { message: 'Employer name must be at least 3 characters' }),
 
   guarDesignation: z
     .string()
     .trim()
-    .nonempty( { message: 'Designation is required' })
+    .nonempty({ message: 'Designation is required' })
     .min(3, { message: 'Designation must be at least 3 characters' }),
 
   guarMonthlyIncome: z
     .string()
     .trim()
-    .nonempty( { message: 'Monthly income is required' })
+    .nonempty({ message: 'Monthly income is required' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid income amount',
     })
@@ -73,7 +72,7 @@ const guarantorDetailsSchema = {
   guarYearEmp: z
     .string()
     .trim()
-    .nonempty( { message: 'Enter the years of employment of the guarantor' })
+    .nonempty({ message: 'Enter the years of employment of the guarantor' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter valid years of employment',
     })
@@ -83,7 +82,7 @@ const guarantorDetailsSchema = {
   guarCreditScore: z
     .string()
     .trim()
-    .nonempty( { message: 'Credit score is a required field' })
+    .nonempty({ message: 'Credit score is a required field' })
     .refine((val) => !Number.isNaN(Number(val)), {
       message: 'Enter a valid credit score',
     })
@@ -93,6 +92,13 @@ const guarantorDetailsSchema = {
     })
     .refine((val) => val <= 900, {
       message: 'Credit score cannot exceed more than 900',
+    }),
+
+  guarExistingLoanEmi: z
+    .string()
+    .nonempty({ message: 'Guarantor existing EMI is required' })
+    .refine((val) => !Number.isNaN(Number(val)), {
+      message: 'Enter a valid EMI',
     }),
 
   guarConsentSchema: z.boolean().refine((val) => val === true, {

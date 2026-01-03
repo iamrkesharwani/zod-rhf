@@ -74,6 +74,7 @@ export const loanFormConfig = {
       guarMonthlyIncome: '',
       guarYearEmp: '',
       guarCreditScore: '',
+      guarExistingLoanEmi: '',
       guarConsentSchema: false,
     },
     summaryConsent: {
