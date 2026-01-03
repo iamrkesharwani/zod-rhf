@@ -10,15 +10,15 @@ export const summaryConsentSchema = z
     const pending = [];
 
     if (!data.confirmAccuracy) {
-      pending.push('confirm information accuracy');
+      pending.push('"confirm information accuracy"');
     }
 
     if (!data.authorizeVerification) {
-      pending.push('authorize verification');
+      pending.push('"authorize verification"');
     }
 
     if (!data.agreeToTerms) {
-      pending.push('agree to terms and conditions');
+      pending.push('"agree to terms & conditions"');
     }
 
     if (pending.length === 3) {
@@ -33,8 +33,8 @@ export const summaryConsentSchema = z
     if (pending.length > 0) {
       const message =
         pending.length === 1
-          ? `Please ${pending[0]}`
-          : `Please ${pending[0]} and ${pending[1]}`;
+          ? `Ensure ${pending[0]} are checked`
+          : `Ensure ${pending[0]} and ${pending[1]} is checked`;
 
       ctx.addIssue({
         code: 'custom',

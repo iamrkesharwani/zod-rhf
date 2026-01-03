@@ -1,7 +1,17 @@
 import { CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
 import { TrendingUp, UserCheck, FileText } from 'lucide-react';
+import { useFormContext } from 'react-hook-form';
+
+import ErrorMsg from '../utils/ErrorMsg';
 
 function Summary() {
+  const {
+    watch,
+    register,
+    trigger,
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <section className="p-10 bg-gradient-to-br from-slate-900 to-blue-900">
       <div className="text-center mb-8">
@@ -121,20 +131,35 @@ function Summary() {
             </h3>
             <div className="space-y-3">
               <label className="summary-check-label">
-                <input type="checkbox" className="summary-checkbox" />
+                <input
+                  {...register('summaryConsent.confirmAccuracy')}
+                  type="checkbox"
+                  className="summary-checkbox"
+                  onClick={() => setTimeout(() => trigger('summaryConsent'), 0)}
+                />
                 <span className="text-white text-sm">
                   I confirm that all information provided is accurate and
                   complete
                 </span>
               </label>
               <label className="summary-check-label">
-                <input type="checkbox" className="summary-checkbox" />
+                <input
+                  {...register('summaryConsent.authorizeVerification')}
+                  type="checkbox"
+                  className="summary-checkbox"
+                  onClick={() => setTimeout(() => trigger('summaryConsent'), 0)}
+                />
                 <span className="text-white text-sm">
                   I authorize verification of the information provided
                 </span>
               </label>
               <label className="summary-check-label">
-                <input type="checkbox" className="summary-checkbox" />
+                <input
+                  {...register('summaryConsent.agreeToTerms')}
+                  type="checkbox"
+                  className="summary-checkbox"
+                  onClick={() => setTimeout(() => trigger('summaryConsent'), 0)}
+                />
                 <span className="text-white text-sm">
                   I agree to the terms and conditions of the loan agreement
                 </span>
@@ -143,6 +168,11 @@ function Summary() {
           </div>
         </div>
       </div>
+      {errors?.summaryConsent?.consentMessage && (
+        <div className="mt-4">
+          <ErrorMsg err={errors.summaryConsent.consentMessage.message} />
+        </div>
+      )}
     </section>
   );
 }
