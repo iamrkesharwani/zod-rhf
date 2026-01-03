@@ -16,17 +16,17 @@ const vehicleSchema = z.object({
     .string()
     .min(1, { message: 'Current value is required' })
     .refine((val) => Number(val) > 10000, {
-      message: 'Value should be ₹10,000',
+      message: 'Value should be at least ₹10,000',
     }),
 });
 
 const bankDepositSchema = z.object({
   depositType: z.string().min(1, 'Deposit type is required'),
-  totalAmount: z
+  currentValue: z
     .string()
     .min(1, 'Total amount is required')
     .refine((val) => Number(val) > 1000, {
-      message: 'Value should be ₹1,000',
+      message: 'Value should be at least ₹1,000',
     }),
 });
 
@@ -36,7 +36,7 @@ const investmentSchema = z.object({
     .string()
     .min(1, 'Current value is required')
     .refine((val) => Number(val) > 1000, {
-      message: 'Value should be ₹1,000',
+      message: 'Value should be at least ₹1,000',
     }),
 });
 
@@ -46,7 +46,7 @@ const loanLiabilitySchema = z.object({
     .string()
     .min(1, 'Outstanding amount is required')
     .refine((val) => Number(val) > 1000, {
-      message: 'Value should be ₹1,000',
+      message: 'Value should be at least ₹1,000',
     }),
 });
 
@@ -56,7 +56,7 @@ const creditCardLiabilitySchema = z.object({
     .string()
     .min(1, 'Outstanding amount is required')
     .refine((val) => Number(val) > 1000, {
-      message: 'Value should be ₹1,000',
+      message: 'Value should be at least ₹1,000',
     }),
 });
 

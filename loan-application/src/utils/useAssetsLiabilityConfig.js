@@ -53,7 +53,7 @@ export const useAssetsLiabilityConfig = (control) => {
       icon: Wallet,
       color: 'purple',
       fields: bankDeposits.fields,
-      append: () => bankDeposits.append({ depositType: '', totalAmount: '' }),
+      append: () => bankDeposits.append({ depositType: '', currentValue: '' }),
       remove: bankDeposits.remove,
     },
     {

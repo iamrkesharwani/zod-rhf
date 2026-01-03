@@ -56,6 +56,44 @@ function AssetsLiabilities() {
     red: 'border-red-400 bg-red-50',
   };
 
+  const calculateTotalAssets = () => {
+    const allAssets = [
+      ...(watch('assetLiability.realEstate') || []),
+      ...(watch('assetLiability.vehicles') || []),
+      ...(watch('assetLiability.bankDeposits') || []),
+      ...(watch('assetLiability.investments') || []),
+    ];
+
+    return allAssets.reduce((total, asset) => {
+      const value = parseFloat(asset.currentValue);
+      return total + (isNaN(value) ? 0 : value);
+    }, 0);
+  };
+
+  const calculateTotalLiabilities = () => {
+    const allLiabilities = [
+      ...(watch('assetLiability.loans') || []),
+      ...(watch('assetLiability.creditCards') || []),
+    ];
+
+    return allLiabilities.reduce((total, liability) => {
+      const value = parseFloat(liability.outstandingAmount);
+      return total + (isNaN(value) ? 0 : value);
+    }, 0);
+  };
+
+  const totalAssets = calculateTotalAssets();
+  const totalLiabilities = calculateTotalLiabilities();
+  const netWorth = totalAssets - totalLiabilities;
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
   return (
     <section className="p-10">
       <div className="flex items-center gap-4 mb-8">
@@ -387,15 +425,15 @@ function AssetsLiabilities() {
                               type="number"
                               placeholder="₹1,500,000"
                               {...register(
-                                `assetLiability.bankDeposits.${index}.totalAmount`
+                                `assetLiability.bankDeposits.${index}.currentValue`
                               )}
                             />
                             {errors?.assetLiability?.bankDeposits?.[index]
-                              ?.totalAmount && (
+                              ?.currentValue && (
                               <ErrorMsg
                                 err={
                                   errors.assetLiability.bankDeposits[index]
-                                    .totalAmount.message
+                                    .currentValue.message
                                 }
                               />
                             )}
@@ -502,7 +540,7 @@ function AssetsLiabilities() {
                     </p>
                   </div>
                   <p className="text-4xl font-bold text-green-700">
-                    ₹93,00,000
+                    {formatCurrency(totalAssets)}
                   </p>
                 </div>
               </div>
@@ -714,7 +752,9 @@ function AssetsLiabilities() {
                       Sum of all liabilities
                     </p>
                   </div>
-                  <p className="text-4xl font-bold text-red-700">₹25,00,000</p>
+                  <p className="text-4xl font-bold text-red-700">
+                    {formatCurrency(totalLiabilities)}
+                  </p>
                 </div>
               </div>
             )}
@@ -723,25 +763,84 @@ function AssetsLiabilities() {
       )}
 
       {/* Net Worth */}
-      <div className="main-section border-indigo-200">
-        <h3 className="text-2xl font-bold mb-6 text-center text-emerald-600">
-          Net Worth Analysis
-        </h3>
-        <div className="grid grid-cols-3 gap-6">
-          <div className="text-center text-green-600">
-            <p className="text-sm font-semibold mb-2">Total Assets</p>
-            <p className="text-3xl font-bold">₹93,00,000</p>
+      {(selectedAssetTypes.length > 0 || selectedLiabilityTypes.length > 0) && (
+        <div className="main-section border-indigo-200 bg-purple-50">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">
+              Net Worth Analysis
+            </h3>
+            <p className="text-sm text-slate-600">
+              Your complete financial overview
+            </p>
           </div>
-          <div className="text-center text-red-600">
-            <p className="text-sm font-semibold mb-2">Total Liabilities</p>
-            <p className="text-3xl font-bold">₹25,00,000</p>
-          </div>
-          <div className="text-center text-emerald-600">
-            <p className="text-sm font-semibold mb-2">Net Worth</p>
-            <p className="text-3xl font-bold">₹68,00,000</p>
+
+          <div className="grid grid-cols-3 gap-6">
+            <div className="bg-white rounded-xl p-6 border-2 border-green-200">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-green-600" />
+                </div>
+              </div>
+              <p className="text-sm font-semibold text-slate-600 text-center mb-2">
+                Total Assets
+              </p>
+              <p className="text-3xl font-bold text-green-600 text-center">
+                ₹{totalAssets.toLocaleString('en-IN')}
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 border-2 border-red-200">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+                  <TrendingDown className="w-5 h-5 text-red-600" />
+                </div>
+              </div>
+              <p className="text-sm font-semibold text-slate-600 text-center mb-2">
+                Total Liabilities
+              </p>
+              <p className="text-3xl font-bold text-red-600 text-center">
+                ₹{totalLiabilities.toLocaleString('en-IN')}
+              </p>
+            </div>
+
+            {/* Net Worth */}
+            <div
+              className={`bg-white rounded-xl p-6 border-2 ${
+                netWorth >= 0 ? 'border-emerald-200' : 'border-orange-200'
+              }`}
+            >
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <div
+                  className={`w-10 h-10 rounded-full ${
+                    netWorth >= 0 ? 'bg-emerald-100' : 'bg-orange-100'
+                  } flex items-center justify-center`}
+                >
+                  <Scale
+                    className={`w-5 h-5 ${
+                      netWorth >= 0 ? 'text-emerald-600' : 'text-orange-600'
+                    }`}
+                  />
+                </div>
+              </div>
+              <p className="text-sm font-semibold text-slate-600 text-center mb-2">
+                Net Worth
+              </p>
+              <p
+                className={`text-3xl font-bold text-center ${
+                  netWorth >= 0 ? 'text-emerald-600' : 'text-orange-600'
+                }`}
+              >
+                ₹{netWorth.toLocaleString('en-IN')}
+              </p>
+              {netWorth < 0 && (
+                <p className="text-xs text-orange-600 text-center mt-2">
+                  Liabilities exceed assets
+                </p>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
