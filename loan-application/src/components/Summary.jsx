@@ -3,6 +3,10 @@ import { TrendingUp, UserCheck, FileText } from 'lucide-react';
 import { useFormContext } from 'react-hook-form';
 
 import ErrorMsg from '../utils/ErrorMsg';
+import {
+  calculateFinancialMetrics,
+  checkSectionCompletion,
+} from '../utils/summaryCalculations';
 
 function Summary() {
   const {
@@ -11,6 +15,29 @@ function Summary() {
     trigger,
     formState: { errors },
   } = useFormContext();
+
+  const formData = watch();
+
+  const { sections, completedSections, totalSections, completedPercentage } =
+    checkSectionCompletion(formData);
+  const { creditScore, emiToIncomeRatio, loanToAssetRatio, debtToIncome } =
+    calculateFinancialMetrics(formData);
+
+  const documentIssues = [];
+  if (
+    !formData.document?.bankStatements ||
+    formData.document.bankStatements.length === 0
+  ) {
+    documentIssues.push('Bank statements missing');
+  }
+  if (!formData.document?.panCard) {
+    documentIssues.push('PAN card missing');
+  }
+  if (!formData.document?.aadhaarCard) {
+    documentIssues.push('Aadhaar card missing');
+  }
+
+  const issuesCount = totalSections - completedSections;
 
   return (
     <section className="p-10 bg-gradient-to-br from-slate-900 to-blue-900">
@@ -34,11 +61,25 @@ function Summary() {
               Application Status
             </h3>
             <p className="text-slate-600">
-              3 issues need attention before submission
+              {issuesCount === 0
+                ? 'All sections completed!'
+                : `${issuesCount} section${issuesCount > 1 ? 's' : ''} need${
+                    issuesCount === 1 ? 's' : ''
+                  } attention`}
             </p>
           </div>
           <div className="text-right">
-            <div className="text-4xl font-bold text-amber-600">78%</div>
+            <div
+              className={`text-4xl font-bold ${
+                completedPercentage === 100
+                  ? 'text-green-600'
+                  : completedPercentage >= 75
+                  ? 'text-amber-600'
+                  : 'text-red-600'
+              }`}
+            >
+              {completedPercentage}%
+            </div>
             <p className="text-sm text-slate-600 mt-1">Complete</p>
           </div>
         </div>
@@ -47,47 +88,62 @@ function Summary() {
         <div className="h-4 bg-slate-200 rounded-full mb-6">
           <div
             className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-500"
-            style={{ width: '78%' }}
+            style={{ width: `${completedPercentage}%` }}
           />
         </div>
 
         <div className="space-y-3">
-          {/* Completed Section */}
-          <div className="summary-checklist border-green-200 bg-green-50">
-            <div className="flex items-center gap-4">
-              <CheckCircle className="summary-checkicon" />
-              <div>
-                <p className="summary-subtitle">Applicant Details</p>
-                <p className="summary-item">All required fields completed</p>
+          {Object.entries(sections).map(([key, section]) => (
+            <div
+              key={key}
+              className={`summary-checklist ${
+                section.isComplete
+                  ? 'border-green-200 bg-green-50'
+                  : 'border-red-200 bg-red-50'
+              }`}
+            >
+              <div className="flex items-center gap-4">
+                {section.isComplete ? (
+                  <CheckCircle className="summary-checkicon" />
+                ) : (
+                  <XCircle className="summary-xicon" />
+                )}
+                <div>
+                  <p className="summary-subtitle">{section.name}</p>
+                  <p className="summary-item">
+                    {section.isComplete
+                      ? 'All required fields completed'
+                      : 'Required fields incomplete'}
+                  </p>
+                </div>
               </div>
+              <span
+                className={
+                  section.isComplete
+                    ? 'summary-completed'
+                    : 'summary-incomplete'
+                }
+              >
+                {section.isComplete ? 'Complete' : 'Incomplete'}
+              </span>
             </div>
-            <span className="summary-completed">Complete</span>
-          </div>
+          ))}
 
-          {/* Warning Section */}
-          <div className="summary-checklist border-amber-200 bg-amber-50">
-            <div className="flex items-center gap-4">
-              <AlertTriangle className="summary-alerticon" />
-              <div>
-                <p className="summary-subtitle">Credit History</p>
-                <p className="summary-item">Credit score needs verification</p>
+          {documentIssues.length > 0 && (
+            <div className="summary-checklist border-amber-200 bg-amber-50">
+              <div className="flex items-center gap-4">
+                <AlertTriangle className="summary-alerticon" />
+                <div>
+                  <p className="summary-subtitle">Document Upload</p>
+                  {documentIssues.map((issue, idx) => (
+                    <p key={idx} className="summary-item">
+                      {issue}
+                    </p>
+                  ))}
+                </div>
               </div>
             </div>
-            <span className="summary-warning">Review</span>
-          </div>
-
-          {/* Incomplete Section */}
-          <div className="summary-checklist border-red-200 bg-red-50">
-            <div className="flex items-center gap-4">
-              <XCircle className="summary-xicon" />
-              <div>
-                <p className="summary-subtitle">Document Upload</p>
-                <p className="summary-item">Bank statements missing</p>
-                <p className="summary-item">PAN card missing</p>
-              </div>
-            </div>
-            <span className="summary-incomplete">Incomplete</span>
-          </div>
+          )}
         </div>
       </div>
 
@@ -101,22 +157,22 @@ function Summary() {
         <div className="grid grid-cols-2 gap-6">
           <div className="summary-grid-bg">
             <p className="input-label">Credit Score</p>
-            <p className="summary-grid-content">750</p>
+            <p className="summary-grid-content">{creditScore || 'N/A'}</p>
           </div>
 
           <div className="summary-grid-bg">
             <p className="input-label">EMI / Income Ratio</p>
-            <p className="summary-grid-content">44.6%</p>
+            <p className="summary-grid-content">{emiToIncomeRatio}%</p>
           </div>
 
           <div className="summary-grid-bg">
             <p className="input-label">Loan to Asset Ratio</p>
-            <p className="summary-grid-content">21.5%</p>
+            <p className="summary-grid-content">{loanToAssetRatio}%</p>
           </div>
 
           <div className="summary-grid-bg">
             <p className="input-label">Debt to Income</p>
-            <p className="summary-grid-content">36.8%</p>
+            <p className="summary-grid-content">{debtToIncome}%</p>
           </div>
         </div>
       </div>
