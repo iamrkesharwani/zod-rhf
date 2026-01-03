@@ -57,8 +57,8 @@ export const loanFormConfig = {
     },
     document: {
       bankStatements: [],
-      panCard: '',
-      aadhaarCard: '',
+      panCard: null,
+      aadhaarCard: null,
       incomeProofs: [],
       additionalDocs: [],
     },
