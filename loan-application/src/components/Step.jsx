@@ -1,6 +1,6 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useFormContext } from 'react-hook-form';
-import { loanStepFields } from '../utils/stepFields';
+import { loanStepFields } from '../utils/loanStepFields';
 
 function Step({ currentStep, setCurrentStep }) {
   const { trigger } = useFormContext();
