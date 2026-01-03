@@ -365,7 +365,7 @@ function AssetsLiabilities() {
                               Bank Deposit #{index + 1}
                             </h4>
                           </div>
-                          <div className="grid gap-2">
+                          <div className="flex gap-2">
                             <button
                               type="button"
                               onClick={assetTypes[2].append}

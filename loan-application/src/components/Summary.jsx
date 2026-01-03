@@ -3,10 +3,7 @@ import { TrendingUp, UserCheck, FileText } from 'lucide-react';
 import { useFormContext } from 'react-hook-form';
 
 import ErrorMsg from '../utils/ErrorMsg';
-import {
-  calculateFinancialMetrics,
-  checkSectionCompletion,
-} from '../utils/summaryCalculations';
+import { checkSectionCompletion } from '../utils/summaryCalculations';
 
 function Summary() {
   const {
@@ -20,8 +17,6 @@ function Summary() {
 
   const { sections, completedSections, totalSections, completedPercentage } =
     checkSectionCompletion(formData);
-  const { creditScore, emiToIncomeRatio, loanToAssetRatio, debtToIncome } =
-    calculateFinancialMetrics(formData);
 
   const documentIssues = [];
   if (
@@ -144,36 +139,6 @@ function Summary() {
               </div>
             </div>
           )}
-        </div>
-      </div>
-
-      {/* Risk Assessment */}
-      <div className="main-section border-blue-200">
-        <h3 className="section-header mb-5">
-          <TrendingUp className="w-6 h-6 text-blue-600" />
-          Financial Risk Assessment
-        </h3>
-
-        <div className="grid grid-cols-2 gap-6">
-          <div className="summary-grid-bg">
-            <p className="input-label">Credit Score</p>
-            <p className="summary-grid-content">{creditScore || 'N/A'}</p>
-          </div>
-
-          <div className="summary-grid-bg">
-            <p className="input-label">EMI / Income Ratio</p>
-            <p className="summary-grid-content">{emiToIncomeRatio}%</p>
-          </div>
-
-          <div className="summary-grid-bg">
-            <p className="input-label">Loan to Asset Ratio</p>
-            <p className="summary-grid-content">{loanToAssetRatio}%</p>
-          </div>
-
-          <div className="summary-grid-bg">
-            <p className="input-label">Debt to Income</p>
-            <p className="summary-grid-content">{debtToIncome}%</p>
-          </div>
         </div>
       </div>
 
