@@ -17,7 +17,7 @@ const App = () => {
 
   const methods = useForm({
     resolver: zodResolver(jobSchema),
-    mode: 'onTouched',
+    mode: 'onChange',
     defaultValues: {
       personalDetails: {
         fullName: '',
